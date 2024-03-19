@@ -14,10 +14,14 @@ BOT_TOKEN = "SDFGHJK"
 
 app = Client("example-bot", api_hash=API_HASH, api_id=API_ID, bot_token=BOT_TOKEN)
 
-app.add_handler(MessageHandler(start_command, filters=filters.command("start") & filters.private))
-app.add_handler(MessageHandler(help_command, filters=filters.command("help") & filters.private))
-app.add_handler(MessageHandler(counter_command, filters=filters.command("counter") & filters.private))
-app.add_handler(CallbackQueryHandler(increment_call, filters=filters.regex(r"\d+")))
-app.add_handler(MessageHandler(echo_message, filters=(filters.text | filters.caption) & filters.private))
-app.run()
+HANDLERS = [
+  MessageHandler(start_command, filters=filters.command("start") & filters.private),
+  MessageHandler(help_command, filters=filters.command("help") & filters.private), 
+	MessageHandler(counter_command, filters=filters.command("counter") & filters.private), 
+	CallbackQueryHandler(increment_call, filters=filters.regex(r"\d+")), 
+	MessageHandler(echo_message, filters=(filters.text | filters.caption) & filters.private)
+] 
+for handler in HANDLERS: 
+  app.add_habdler(handler)
 
+app.run()
